@@ -1,0 +1,41 @@
+FUNCIONES 
+
+CREATE OR REPLACE FUNCTION registrar_venta(
+    p_id_cliente INT,
+    p_productos INT[],      -- arreglo con IDs de producto
+    p_cantidades INT[]      -- arreglo con cantidades por producto
+)
+RETURNS VOID AS $$
+DECLARE
+    v_id_venta INT;
+    i INT;
+    v_stock INT;
+    v_precio NUMERIC(10, 2);
+BEGIN
+    IF array_length(p_productos, 1) != array_length(p_cantidades, 1) THEN
+        RAISE EXCEPTION 'Los arreglos de productos y cantidades no coinciden en tamaño';
+    END IF;
+
+    -- Iniciar transacción implícita
+    INSERT INTO ventas(id_cliente) VALUES (p_id_cliente) RETURNING id_venta INTO v_id_venta;
+
+    FOR i IN 1..array_length(p_productos, 1) LOOP
+        SELECT stock, precio INTO v_stock, v_precio
+        FROM productos
+        WHERE id_producto = p_productos[i];
+
+        IF v_stock < p_cantidades[i] THEN
+            RAISE EXCEPTION 'Stock insuficiente para el producto ID %', p_productos[i];
+        END IF;
+
+        -- Insertar detalle
+        INSERT INTO detalle_ventas(id_venta, id_producto, cantidad, precio_unitario)
+        VALUES (v_id_venta, p_productos[i], p_cantidades[i], v_precio);
+
+        -- Actualizar stock
+        UPDATE productos
+        SET stock = stock - p_cantidades[i]
+        WHERE id_producto = p_productos[i];
+    END LOOP;
+END;
+$$ LANGUAGE plpgsql;

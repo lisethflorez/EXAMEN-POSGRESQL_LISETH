@@ -1,0 +1,54 @@
+  Procedimiento para registrar una venta
+
+CREATE OR REPLACE PROCEDURE registrar_venta(
+    IN p_id_cliente INT,
+    IN p_id_producto INT,
+    IN p_cantidad INT
+)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    v_stock_actual INT;
+    v_precio_unitario NUMERIC;
+    v_id_venta INT;
+BEGIN
+    -- Validar que el cliente exista
+    IF NOT EXISTS (
+        SELECT 1 FROM clientes WHERE id_cliente = p_id_cliente
+    ) THEN
+        RAISE EXCEPTION 'El cliente con ID % no existe.', p_id_cliente;
+    END IF;
+
+    -- Verificar existencia del producto y obtener stock actual
+    SELECT stock, precio INTO v_stock_actual, v_precio_unitario
+    FROM productos
+    WHERE id_producto = p_id_producto;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'El producto con ID % no existe.', p_id_producto;
+    END IF;
+
+    -- Validar stock suficiente
+    IF v_stock_actual < p_cantidad THEN
+        RAISE NOTICE 'No hay stock suficiente. Stock actual: %, Cantidad solicitada: %',
+            v_stock_actual, p_cantidad;
+        RETURN;
+    END IF;
+
+    -- Registrar venta
+    INSERT INTO ventas (id_cliente, fecha)
+    VALUES (p_id_cliente, CURRENT_DATE)
+    RETURNING id_venta INTO v_id_venta;
+
+    -- Insertar detalle de venta
+    INSERT INTO detalle_venta (id_venta, id_producto, cantidad, precio_unitario)
+    VALUES (v_id_venta, p_id_producto, p_cantidad, v_precio_unitario);
+
+    -- Actualizar stock
+    UPDATE productos
+    SET stock = stock - p_cantidad
+    WHERE id_producto = p_id_producto;
+
+    RAISE NOTICE 'Venta registrada exitosamente. ID venta: %', v_id_venta;
+END;
+$$;

@@ -1,0 +1,75 @@
+ INCERSIONES 
+
+INSERT INTO proveedores (nombre, contacto, telefono) VALUES
+('TechCorp', 'Carlos Pérez', '3123456789'),
+('Electronix S.A.', 'Ana Rodríguez', '3112223344'),
+('CompuStore', 'Luis Gómez', '3109876543'),
+('DigitalWorld', 'Marta Ríos', '3199988776'),
+('SmartTech', 'Javier Salazar', '3134455667'),
+('InfoParts', 'Paula Duarte', '3141234567'),
+('ElectroDistribuciones', 'Samuel Núñez', '3168889999'),
+('Bits&Bytes', 'Camila Torres', '3171112233'),
+('NextGenTech', 'Mario López', '3123334444'),
+('GigaBytes Ltda.', 'Natalia Jiménez', '3185556666'),
+('HardwareHub', 'David Ruíz', '3137778888'),
+('RedConnect', 'Laura Galvis', '3100001122'),
+('CompNet S.A.', 'Andrés Mejía', '3154447777'),
+('TopGadgets', 'Juliana Reyes', '3191112233'),
+('Tecnoplus', 'Ernesto Cardona', '3179990001');
+
+
+INSERT INTO productos (nombre, categoria, precio, stock, proveedor_id) VALUES
+('Laptop Lenovo IdeaPad', 'Laptops', 2500000, 10, 1),
+('iPhone 13', 'Smartphones', 3800000, 3, 2),
+('Mouse Logitech M170', 'Accesorios', 50000, 20, 3),
+('Teclado Mecánico Redragon', 'Accesorios', 150000, 7, 4),
+('Monitor Samsung 24"', 'Monitores', 800000, 2, 5),
+('SSD Kingston 480GB', 'Almacenamiento', 250000, 6, 6),
+('Cable HDMI 2m', 'Accesorios', 20000, 25, 7),
+('Router TP-Link', 'Redes', 120000, 4, 8),
+('Disco Duro 1TB', 'Almacenamiento', 220000, 12, 9),
+('Tablet Samsung Galaxy Tab A8', 'Tablets', 900000, 8, 10),
+('Laptop HP Pavilion', 'Laptops', 3200000, 1, 11),
+('Audífonos JBL', 'Audio', 180000, 13, 12),
+('Cámara Web Logitech', 'Accesorios', 100000, 5, 13),
+('Impresora Epson', 'Periféricos', 600000, 3, 14),
+('Adaptador USB-C', 'Accesorios', 35000, 10, 15);
+
+
+INSERT INTO clientes (nombre, correo, telefono) VALUES
+('Andrea Cárdenas', 'andrea@gmail.com', '3101122334'),
+('Luis Martínez', 'luism@yahoo.com', '3123344556'),
+('Carolina Gómez', 'carogomez@hotmail.com', '3181234567'),
+('Fernando Ruiz', 'fer.ruiz@gmail.com', '3159988776'),
+('Diana Patiño', 'dianap@gmail.com', '3132233445'),
+('José Morales', 'jmorales@live.com', '3177896543'),
+('Sofía Torres', 'sofit@gmail.com', '3111112233'),
+('Diego Álvarez', 'diego.alv@gmail.com', '3122223344'),
+('Laura Restrepo', 'laurest@outlook.com', '3195556666'),
+('Camilo Herrera', 'cherrera@gmail.com', '3102233445'),
+('Lucía Mendoza', 'lmendoza@gmail.com', '3145566778'),
+('Julio Rincón', 'julior@hotmail.com', '3166677889'),
+('María López', 'mlopez@gmail.com', '3138899001'),
+('Esteban Pérez', 'eperez@gmail.com', '3173322110'),
+('Valentina Suárez', 'valensuarez@yahoo.com', '3188881112');
+
+
+-- Asegúrate de que estos IDs de producto y cliente existen antes de correr este script
+INSERT INTO ventas (fecha, cliente_id, producto_id, cantidad) VALUES
+('2025-04-01', 1, 1, 1),
+('2025-04-02', 2, 2, 1),
+('2025-04-02', 3, 3, 2),
+('2025-04-03', 4, 4, 1),
+('2025-04-04', 5, 5, 1),
+('2025-04-05', 6, 6, 3),
+('2025-04-05', 7, 7, 1),
+('2025-04-06', 8, 8, 2),
+('2025-04-06', 9, 9, 1),
+('2025-04-07', 10, 10, 1),
+('2025-04-07', 11, 11, 2),
+('2025-04-08', 12, 12, 1),
+('2025-04-08', 13, 13, 2),
+('2025-04-09', 14, 14, 1),
+('2025-04-09', 15, 15, 1);
+
+
